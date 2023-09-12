@@ -20,8 +20,9 @@ class ProductFactory extends Factory
      */
     public function definition(): array
     {
-        $multiImages = [$this->faker->imageUrl('450', '450'), $this->faker->imageUrl('450', '450'), $this->faker->imageUrl('450', '450'), $this->faker->imageUrl('450', '450'), $this->faker->imageUrl('450', '450')];
+        $mImgs = ["upload/products/" . $this->faker->numberBetween(1, 5) . ".jpg", "upload/products/" . $this->faker->numberBetween(5, 10) . ".jpg", "upload/products/" . $this->faker->numberBetween(10, 20) . ".jpg"];
 
+        $thumbnail = "upload/products/" . $this->faker->numberBetween(1, 21) . ".jpg";
         return [
             'seller_id' => $this->faker->randomElement(Seller::pluck('id')->toArray()),
             'brand_id' => $this->faker->randomElement(Brand::pluck('id')->toArray()),
@@ -29,15 +30,17 @@ class ProductFactory extends Factory
             'sub_category_id' => $this->faker->randomElement(SubCategory::pluck('id')->toArray()),
             'name' => $this->faker->name(),
             'slug' => $this->faker->unique()->slug(),
-            'thumbnail' => $this->faker->imageUrl('450', '450'),
-            'iamges' => $this->faker->randomElement([$multiImages]),
+            'descp' => $this->faker->text(),
+            // 'thumbnail' => $this->faker->imageUrl('350', '350'),
+            'thumbnail' => $thumbnail,
+            // 'images' => $this->faker->randomElement([$mImgs]),
+            'images' => $mImgs,
             'price' => $this->faker->numberBetween(800, 3000),
             'discount' => $this->faker->numberBetween(1, 99),
             'stock' => $this->faker->numberBetween(100, 300),
             'sale' => $this->faker->randomElement([true, false]),
-            'conditions' => $this->faker->randomElement(['new', 'popular', 'featurd', 'winter']),
+            'conditions' => $this->faker->randomElement(['new', 'popular', 'feature', 'winter']),
             'added_by' => $this->faker->randomElement(['admin', 'seller']),
-            'status' => $this->faker->randomElement(['active', 'inactive']),
             'status' => $this->faker->randomElement(['active', 'inactive']),
         ];
     }
